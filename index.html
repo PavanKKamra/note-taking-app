@@ -2,28 +2,45 @@
 <html>
     <head>
         <meta charset="utf-8">
+        <h1 style="text-align: center">Note-Taking Application</h1>
     </head>
 
     <body>
-   
-       <script src="https://unpkg.com/filer/dist/filer.min.js"></script>
-       
-       <script> 
-            const fs = new Filer.FileSystem(); 
-            document.addEventListener('DOMContentLoaded', (event) => {
-                fs.readFile('/note', 'utf8', function (err, data) {
-                if(err != null || data == null){ 
-                    data = "Welcome to my notepad!"; 
-                // data is now the contents of /myfile.txt (i.e., a String)
-               
-                    document.querySelector('#note').innerHTML = data;
-                });
-            });
-            
-)
-       </script>
+        <div id="notes" contenteditable> </div>
 
-
-    
-</body>
+          <button onclick="saveNote()" type="button">Save Notes</button>
+    </body>
 </html>
+
+<script src="https://unpkg.com/filer/dist/filer.min.js"></script>
+       
+<script> 
+     const fd = new Filer.FileSystem(); 
+    
+     window.addEventListener('DOMContentLoaded', event=>{
+         fd.readFile('/notes', 'utf8', function(error,data){ 
+             try {
+                if (data) {
+                  document.querySelector("#notes").innerHTML=data; 
+                }
+                else {
+                    throw err;  
+                }
+             }
+             catch (err) {
+                    document.querySelector("#notes").innerHTML="Welcome to my notepad! Please start typing here: ";
+             }
+             setInterval(saveNote(), 3000); 
+         })         
+     })
+
+     function saveNote() {
+            fd.writeFile('/notes', document.querySelector('#notes').innerHTML,
+                function(err) {
+                    if(err) {
+                        throw err;
+                    }
+                });
+     }
+
+</script>   
