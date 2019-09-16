@@ -6,7 +6,7 @@
     </head>
 
     <body>
-        <div id="notes" contenteditable> </div>
+        <div id="notepad" contenteditable> </div>
 
           <button onclick="saveNote()" type="button">Save Notes</button>
     </body>
@@ -18,24 +18,24 @@
      const fd = new Filer.FileSystem(); 
     
      window.addEventListener('DOMContentLoaded', event=>{
-         fd.readFile('/notes', 'utf8', function(error,data){ 
+         fd.readFile('/notepad', 'utf8', function(error,data){ 
              try {
                 if (data) {
-                  document.querySelector("#notes").innerHTML=data; 
+                  document.querySelector("#notepad").innerHTML=data; 
                 }
                 else {
                     throw err;  
                 }
              }
              catch (err) {
-                    document.querySelector("#notes").innerHTML="Welcome to my notepad! Please start typing here: ";
+                    document.querySelector("#notepad").innerHTML="Welcome to my notepad! Please start typing here: ";
              }
-             setInterval(saveNote(), 3000); 
+             
          })         
      })
 
      function saveNote() {
-            fd.writeFile('/notes', document.querySelector('#notes').innerHTML,
+            fd.writeFile('/notepad', document.querySelector('#notepad').innerHTML,
                 function(err) {
                     if(err) {
                         throw err;
