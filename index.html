@@ -13,6 +13,7 @@
 </html>
 
 <script src="https://unpkg.com/filer/dist/filer.min.js"></script>
+<script src="https://unpkg.com/hotkeys-js/dist/hotkeys.min.js"></script>
        
 <script> 
      const fd = new Filer.FileSystem(); 
@@ -43,4 +44,12 @@
                 });
      }
 
-</script>   
+</script>  
+<script type="text/javascript">
+    hotkeys('alt+s', function (event, handler){
+      if (handler.key == 'alt+s') {
+        saveNote();
+        console.log("alt+s")
+      }
+    });
+</script>
