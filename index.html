@@ -9,16 +9,18 @@
         <div id="notepad" contenteditable> </div>
 
           <button onclick="saveNote()" type="button">Save Notes</button>
+          <button onclick="clearNote()" type="button">Clear Notes</button>
     </body>
 </html>
 
 <script src="https://unpkg.com/filer/dist/filer.min.js"></script>
+<script src="https://unpkg.com/hotkeys-js/dist/hotkeys.min.js"></script>
        
 <script> 
      const fd = new Filer.FileSystem(); 
     
      window.addEventListener('DOMContentLoaded', event=>{
-         fd.readFile('/notepad', 'utf8', function(error,data){ 
+         fd.readFile('/notepad', 'utf8', function(error,data){
              try {
                 if (data) {
                   document.querySelector("#notepad").innerHTML=data; 
@@ -30,9 +32,12 @@
              catch (err) {
                     document.querySelector("#notepad").innerHTML="Welcome to my notepad! Please start typing here: ";
              }
-             
-         })         
-     })
+         });
+
+         hotkeys('ctrl+e', function() {
+             document.querySelector('#notepad').innerHTML = "Welcome to my notepad! Please start typing here: ";
+        });
+     });
 
      function saveNote() {
             fd.writeFile('/notepad', document.querySelector('#notepad').innerHTML,
@@ -43,4 +48,8 @@
                 });
      }
 
-</script>   
+     function clearNote() {
+         document.querySelector('#notepad').innerHTML = "Welcome to my notepad! Please start typing here: ";
+     }
+
+</script>
