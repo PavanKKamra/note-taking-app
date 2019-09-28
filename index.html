@@ -9,9 +9,10 @@
         <div id="notepad" contenteditable> </div>
 
           <button onclick="saveNote()" type="button">Save Notes</button>
+          <button class="btn" onclick="noteDownload()">Download</button>
     </body>
 </html>
-
+<script src="https://cdn.jsdelivr.net/g/filesaver.js"></script>
 <script src="https://unpkg.com/filer/dist/filer.min.js"></script>
        
 <script> 
@@ -33,7 +34,6 @@
              
          })         
      })
-
      function saveNote() {
             fd.writeFile('/notepad', document.querySelector('#notepad').innerHTML,
                 function(err) {
@@ -43,4 +43,12 @@
                 });
      }
 
-</script>   
+     
+        function noteDownload(name) {
+            var b = new Blob([document.querySelector('#notepad').innerHTML], 
+                {type: "text/plain;charset=utf-8"});
+
+                saveAs(b, "note.txt");
+            
+        }
+</script> 
