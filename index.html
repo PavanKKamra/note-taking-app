@@ -12,9 +12,12 @@
 
           <button onclick="saveNote()" type="button">Save Notes</button>
           <button onclick="clearNote()" type="button">Clear Notes</button>
-    </body>
+          <button class="btn" onclick="noteDownload()">Download</button>
+    
+  </body>
 </html>
 
+<script src="https://cdn.jsdelivr.net/g/filesaver.js"></script>
 <script src="https://unpkg.com/filer/dist/filer.min.js"></script>
 <script src="https://unpkg.com/hotkeys-js/dist/hotkeys.min.js"></script>
        
@@ -40,7 +43,7 @@
              document.querySelector('#notepad').innerHTML = "Welcome to my notepad! Please start typing here: ";
         });
      });
-
+  
      function saveNote() {
             fd.writeFile('/notepad', document.querySelector('#notepad').innerHTML,
                 function(err) {
@@ -65,3 +68,12 @@ function clearNote() {
       }
     });
 </script>
+
+<script>
+function noteDownload(name) {
+    var b = new Blob([document.querySelector('#notepad').innerHTML], 
+        {type: "text/plain;charset=utf-8"});
+        saveAs(b, "note.txt");
+    
+}
+</script> 
